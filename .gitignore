@@ -1,0 +1,22 @@
+# --- Laravel/PHP ---
+src/vendor/
+src/.env
+src/storage/*.key
+src/storage/framework/cache/data/*
+src/storage/framework/sessions/*
+src/storage/framework/views/*
+src/storage/logs/*
+src/bootstrap/cache/*
+
+# --- Node/JS ---
+src/node_modules/
+npm-debug.log
+
+# --- Docker & System ---
+.DS_Store
+.env
+nginx/logs/*.log
+
+# --- Database Data (Crucial: do not ignore if you want to push seeders, 
+# but DO ignore the actual binary data volume)
+postgres_data/

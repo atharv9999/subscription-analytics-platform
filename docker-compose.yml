@@ -18,6 +18,7 @@ services:
       context: .
       dockerfile: PHP.dockerfile
     tty: true
+    user: "1001:1001"
     volumes:
       - ./src:/var/www/html
     networks:

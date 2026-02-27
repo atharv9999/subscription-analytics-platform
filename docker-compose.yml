@@ -1,7 +1,7 @@
 services:
 #nginx reverse proxy as entry point
   web:
-    images: nginx:alpine
+    image: nginx:alpine
     ports:
       - "8080:80"
     volumes:
@@ -17,8 +17,9 @@ services:
     build:
       context: .
       dockerfile: PHP.dockerfile
+    tty: true
     volumes:
-      -./src:/var/www/html
+      - ./src:/var/www/html
     networks:
       - app-network
 
@@ -36,9 +37,9 @@ services:
     networks:
       - app-network
 
-  network:
-    app-network:
-      driver: bridge
+networks:
+  app-network:
+    driver: bridge
 
-  volumes:
-    postgres_data:
+volumes:
+  postgres_data:

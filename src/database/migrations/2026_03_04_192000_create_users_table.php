@@ -12,17 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+<<<<<<<< HEAD:src/database/migrations/2026_03_02_194600_create_users_table.php
             $table->uuid('id')->primary();
             $table->uuid('tenant_id');
+========
+            $table->uuid("id")->primary();
+            $table->uuid("tenant_id");
+>>>>>>>> feat/tenant_schema:src/database/migrations/2026_03_04_192000_create_users_table.php
             $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role')->default('viewer');
+<<<<<<<< HEAD:src/database/migrations/2026_03_02_194600_create_users_table.php
             $table->jsonb('metadata')->nullable(); // JSONB for Tenant-Specific User Preferences (Theme, Notifications, etc.)
             $table->rememberToken();
             $table->timestamps();
+========
+            $table->jsonb('metadata')->nullable(); 
+            $table->rememberToken();
+            $table->timestamps();
+            
+>>>>>>>> feat/tenant_schema:src/database/migrations/2026_03_04_192000_create_users_table.php
             $table->index('tenant_id');
         });
 

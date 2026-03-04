@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->uuid('tenant_id');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('role')->default('viewer');
+            $table->jsonb('metadata')->nullable(); // JSONB for Tenant-Specific User Preferences (Theme, Notifications, etc.)
             $table->rememberToken();
             $table->timestamps();
+            $table->index('tenant_id');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

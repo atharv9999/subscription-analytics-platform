@@ -24,11 +24,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => (string) str()->uuid(),
+            'tenant_id' => \App\Models\Tenant::factory(), 
+            
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'password' => bcrypt('password'), // Use a simple default for the demo
+            'remember_token' => str()->random(10),
+            'role' => fake()->randomElement(['admin', 'manager', 'viewer']),
+            'metadata' => [
+                'preferred_language' => 'en',
+                'timezone' => 'Asia/Kolkata'
+            ],
         ];
     }
 

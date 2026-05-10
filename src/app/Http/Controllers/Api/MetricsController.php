@@ -27,4 +27,17 @@ class MetricsController extends Controller
             'usage_stats' => $this->metrics->getUsageStats($tenant_id),
         ]);
     }
+
+    public function trend(Request $request)
+    {
+        $tenantId = $request->query('tenant_id');
+
+        // We just ask the service for the data
+        $trend = $this->metrics->getTrendData($tenantId);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $trend
+        ]);
+    }
 }

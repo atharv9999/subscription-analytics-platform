@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             foreach ($planData as $data) {
                 $createdPlans->push(
                     \App\Models\Plan::factory()->create(array_merge($data, [
+                        'tenant_id' => $tenant->id,
                         'product_id' => $product->id,
                         'billing_cycle' => 'monthly'
                     ]))

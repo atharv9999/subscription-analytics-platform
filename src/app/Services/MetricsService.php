@@ -8,7 +8,7 @@
 
     class MetricsService{
         public function getMRR(string $tenant_id): float {
-            return Subscription::where('tenant_id', $tenant_id)->where('status', 'active')
+            return Subscription::where('subscriptions.tenant_id', $tenant_id)->where('status', 'active')
             ->join('plans', 'subscriptions.plan_id', '=', 'plans.id')
             ->sum('plans.base_price');
         }

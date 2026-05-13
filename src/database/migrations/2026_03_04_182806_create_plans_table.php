@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
+            $table->uuid('tenant_id');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+
             $table->uuid('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 

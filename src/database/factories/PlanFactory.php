@@ -18,6 +18,7 @@ class PlanFactory extends Factory
     {
         return [
             'id' => (string) str()->uuid(),
+            'tenant_id' => \App\Models\Tenant::factory(),
             'product_id' => \App\Models\Product::factory(),
             'name' => $this->faker->randomElement(['Basic', 'Pro', 'Enterprise']),
             'billing_cycle' => $this->faker->randomElement(['monthly', 'yearly']),

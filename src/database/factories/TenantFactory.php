@@ -20,7 +20,8 @@ class TenantFactory extends Factory
             'id' => (string) str()->uuid(),
             'name' => $this->faker->company(),
             'domain' => $this->faker->unique()->domainName(),
-            'status' => $this->faker->randomElement(['active', 'trialing', 'suspended']),
+            'status' => 'active' // can use $this->faker->randomElement(['active', 'trialing', 'suspended']), 
+                                // but for simplicity, we'll set all to 'active' for now    
         ];
     }
 }

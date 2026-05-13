@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('password'), // Use a simple default for the demo
             'remember_token' => str()->random(10),
-            'role' => fake()->randomElement(['admin', 'manager', 'viewer']),
+            'role' => 'admin', // can use fake()->randomElement(['admin', 'manager', 'viewer']), but for simplicity, we'll set all to 'admin' for now
             'metadata' => [
                 'preferred_language' => 'en',
                 'timezone' => 'Asia/Kolkata'

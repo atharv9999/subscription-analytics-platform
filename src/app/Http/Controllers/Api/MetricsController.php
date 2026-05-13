@@ -10,30 +10,29 @@ class MetricsController extends Controller
 {
     protected $metrics;
 
-    public function __construct(MetricsService $metrics){
+    public function __construct(MetricsService $metrics) {
         $this->metrics = $metrics;
     }
 
     public function index(Request $request)
     {
-        $tenant_id = $request->get('tenant_id');
-
-        if (empty($tenant_id)) {
-            return response()->json(['error' => 'tenant_id query parameter is required'], 422);
-        }
-
+        // Notice we removed the 'tenant_id' check. 
+        // The Identity is handled by Sanctum and the Scope automatically.
         return response()->json([
-            'mrr' => $this->metrics->getMRR($tenant_id),
-            'usage_stats' => $this->metrics->getUsageStats($tenant_id),
+            'status' => 'success',
+            'data' => [
+                'mrr' => $this->metrics->getMRR(),
+                'active_subscriptions' => $this->metrics->getActiveCount(),
+                'churn_rate' => $this->metrics->getChurnRate(),
+                'usage_stats' => $this->metrics->getUsageStats(),
+            ]
         ]);
     }
 
     public function trend(Request $request)
     {
-        $tenantId = $request->query('tenant_id');
-
-        // We just ask the service for the data
-        $trend = $this->metrics->getTrendData($tenantId);
+        // No arguments needed here anymore
+        $trend = $this->metrics->getTrendData();
 
         return response()->json([
             'status' => 'success',

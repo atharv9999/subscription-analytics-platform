@@ -12,12 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->statefulApi(); // This is the magic line for SPAs
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })
-    // Add this part here
     ->withCommands([
         \App\Console\Commands\GenerateUsage::class,
     ])

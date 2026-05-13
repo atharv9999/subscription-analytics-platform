@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     // PASTE YOUR COPIED UUID HERE
-    const tenantId = 'aac63db8-eedb-41f0-9e1c-33d601c7a484'; 
+    const tenantId = 'f62fa46d-0a04-4ebd-a485-0fba92b83c25'; 
 
     api.get(`/metrics?tenant_id=${tenantId}`)
       .then(response => {
@@ -42,7 +42,7 @@ function App() {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
-      const tenantId = 'aac63db8-eedb-41f0-9e1c-33d601c7a484';
+      const tenantId = 'f62fa46d-0a04-4ebd-a485-0fba92b83c25';
 
       // Fetch Trend Data
       api.get(`/metrics/trend?tenant_id=${tenantId}`)

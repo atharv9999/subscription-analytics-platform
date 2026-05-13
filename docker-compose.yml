@@ -38,6 +38,21 @@ services:
     networks:
       - app-network
 
+#node engine for npm install and vite
+  node:
+    image: node:20-alpine
+    working_dir: /var/www/html/frontend
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "5173:5173"
+    tty: true
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge

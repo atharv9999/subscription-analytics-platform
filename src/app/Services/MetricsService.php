@@ -1,29 +1,38 @@
 <?php
 
-    namespace App\Services;
+namespace App\Services;
 
-    use App\Models\Subscription;
-    use App\Models\UsageEvent;
-    use Illuminate\Support\Facades\DB;
+use App\Models\Subscription;
+use App\Models\UsageEvent;
+use Illuminate\Support\Facades\DB;
 
-    class MetricsService{
-        public function getMRR(string $tenant_id): float {
-            return Subscription::where('subscriptions.tenant_id', $tenant_id)->where('status', 'active')
+class MetricsService {
+    
+    public function getMRR(): float {
+        return (float) Subscription::where('status', 'active')
             ->join('plans', 'subscriptions.plan_id', '=', 'plans.id')
             ->sum('plans.base_price');
-        }
+    }
 
-        public function getUsageStats(string $tenant_id): array {
-            return UsageEvent::where('tenant_id', $tenant_id)->select('type', DB::raw('SUM(quantity) as total'))
-            ->groupBy('type')->get()->toArray();
-        }
+    public function getActiveCount(): int {
+        return Subscription::where('status', 'active')->count();
+    }
 
-        public function getTrendData($tenantId)
-        {
-            // All the heavy SQL lifting stays here
-            return DB::table('subscriptions')
+    public function getChurnRate(): float {
+        // Temporary mock logic for the UI
+        return 2.4; 
+    }
+
+    public function getUsageStats(): array {
+        return UsageEvent::select('type', DB::raw('SUM(quantity) as total'))
+            ->groupBy('type')
+            ->get()
+            ->toArray();
+    }
+
+    public function getTrendData() {
+        return Subscription::query()
             ->join('plans', 'subscriptions.plan_id', '=', 'plans.id')
-            ->where('subscriptions.tenant_id', $tenantId)
             ->select(
                 DB::raw("TO_CHAR(subscriptions.created_at, 'Mon') as month"),
                 DB::raw("SUM(plans.base_price) as revenue"),
@@ -32,5 +41,5 @@
             ->groupBy('month')
             ->orderBy('sort_date', 'ASC')
             ->get();
-        }
     }
+}
